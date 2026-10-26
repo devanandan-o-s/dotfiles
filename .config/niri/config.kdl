@@ -1,0 +1,731 @@
+
+// ============================================================================
+// INK & CLOUD — NIRI + NOCTALIA
+// Monochrome / Japanese ink-wash aesthetic
+// ============================================================================
+
+
+// ============================================================================
+// NOCTALIA BACKDROP
+// ============================================================================
+
+// Place Noctalia's blurred wallpaper inside Niri's overview backdrop.
+layer-rule {
+    match namespace="^noctalia-backdrop"
+    place-within-backdrop true
+}
+
+
+// ============================================================================
+// NOCTALIA SURFACES
+// ============================================================================
+
+// Noctalia bar, notifications, dock, panels and OSD.
+// xray false gives a more natural frosted-glass appearance.
+layer-rule {
+    match namespace="^noctalia-(bar-[^\"]+|notification|dock|panel|attached-panel|osd)$"
+
+    background-effect {
+        xray false
+    }
+}
+
+
+// ============================================================================
+// NOCTALIA WINDOW SWITCHER
+// ============================================================================
+
+layer-rule {
+    match namespace="^noctalia-window-switcher$"
+
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+
+// ============================================================================
+// ENVIRONMENT & CURSORS
+// ============================================================================
+
+environment {
+    QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORMTHEME "qt6ct"
+
+    XDG_CURRENT_DESKTOP "Niri"
+    XDG_SESSION_TYPE "wayland"
+
+    XCURSOR_THEME "Bibata-Modern-Ice"
+    XCURSOR_SIZE "28"
+
+    GTK_CURSOR_THEME "Bibata-Modern-Ice"
+}
+
+cursor {
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size 28
+}
+
+
+// ============================================================================
+// INPUT DEVICES
+// ============================================================================
+
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+
+    }
+
+    touchpad {
+        tap
+        dwt
+        natural-scroll
+    }
+
+    mouse {
+    }
+
+    trackpoint {
+    }
+
+	focus-follows-mouse
+	warp-mouse-to-focus mode="center-xy"
+}
+
+
+// ============================================================================
+// OUTPUT — BUILT-IN DISPLAY
+// ============================================================================
+
+output "eDP-1" {
+    mode "1920x1080@40.036999"
+    scale 1.0
+    transform "normal"
+    position x=0 y=0
+
+    variable-refresh-rate on-demand=false
+
+}
+
+
+// ============================================================================
+// LAYOUT & DECORATIONS
+// ============================================================================
+
+layout {
+    gaps 10
+
+    center-focused-column "never"
+    always-center-single-column
+
+
+    // ------------------------------------------------------------------------
+    // Column widths
+    // ------------------------------------------------------------------------
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width {}
+
+
+    // ------------------------------------------------------------------------
+    // Focus ring
+    // ------------------------------------------------------------------------
+    // Black ink active state instead of the previous blue accent.
+
+    focus-ring {
+        width 2
+
+        active-color "#181818"
+        inactive-color "#C7C9CA"
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Border
+    // ------------------------------------------------------------------------
+
+    border {
+        off
+
+        width 2
+
+        active-color "#181818"
+        inactive-color "#C7C9CA"
+
+        // Functional red accent for urgent windows only.
+        urgent-color "#8A1C1C"
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Shadows
+    // ------------------------------------------------------------------------
+
+    shadow {
+        on
+
+        softness 30
+        spread 4
+
+        offset x=0 y=5
+
+        color "#00000040"
+    }
+
+
+    // ------------------------------------------------------------------------
+    // Struts
+    // ------------------------------------------------------------------------
+
+    struts {
+    }
+}
+
+
+// ============================================================================
+// GLOBAL BLUR
+// ============================================================================
+//
+// Niri 26.04+
+//
+// Kept deliberately subtle because the wallpaper itself already contains
+// a large amount of soft/cloud-like visual texture.
+//
+
+blur {
+    passes 2
+    offset 3.0
+    noise 0.02
+    saturation 0.95
+}
+
+
+// ============================================================================
+// AUTOSTART
+// ============================================================================
+
+// Noctalia desktop shell.
+spawn-at-startup "noctalia"
+
+// Clipboard persistence daemon.
+spawn-sh-at-startup "pkill -9 wl-paste; /usr/bin/wl-paste --watch /usr/bin/cliphist store"
+
+
+// ============================================================================
+// GENERAL
+// ============================================================================
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+
+
+// ============================================================================
+// WINDOW RULES
+// ============================================================================
+
+
+// ---------------------------------------------------------------------------
+// Global rounded corners
+// ---------------------------------------------------------------------------
+
+window-rule {
+    geometry-corner-radius 16
+    clip-to-geometry true
+}
+
+
+// ---------------------------------------------------------------------------
+// Global window blur
+// ---------------------------------------------------------------------------
+
+window-rule {
+    background-effect {
+        blur true
+        xray false
+        noise 0.02
+        saturation 0.95
+    }
+}
+
+window-rule {
+    match app-id=r#"^com\.microsoft\.VSCode$"#
+    opacity 0.85
+}
+
+// ---------------------------------------------------------------------------
+// Don't draw an additional Niri border.
+// ---------------------------------------------------------------------------
+
+window-rule {
+    draw-border-with-background false
+}
+
+
+// ---------------------------------------------------------------------------
+// Brave Picture-in-Picture
+// ---------------------------------------------------------------------------
+// IMPORTANT: app-id and title are on the SAME line because they are part
+// of the same KDL `match` node.
+
+window-rule {
+    match app-id=r#"^brave-browser$"# title=r#"^Picture-in-Picture$"#
+
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"^brave$"# title=r#"^Picture-in-Picture$"#
+
+    open-floating true
+}
+
+
+// ---------------------------------------------------------------------------
+// mpv — on-demand VRR
+// ---------------------------------------------------------------------------
+
+window-rule {
+    match app-id="^mpv$"
+
+    variable-refresh-rate true
+}
+
+
+// ---------------------------------------------------------------------------
+// WezTerm
+// ---------------------------------------------------------------------------
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+
+    default-column-width {}
+}
+
+
+// ============================================================================
+// KEYBINDINGS
+// ============================================================================
+
+binds {
+
+    // ------------------------------------------------------------------------
+    // NOCTALIA
+    // ------------------------------------------------------------------------
+
+
+    Mod+D hotkey-overlay-title="App Launcher" {
+        spawn-sh "noctalia msg panel-toggle launcher";
+    }
+
+    Mod+S hotkey-overlay-title="Control Center" {
+        spawn-sh "noctalia msg panel-toggle control-center";
+    }
+
+    Mod+Comma hotkey-overlay-title="Settings" {
+        spawn-sh "noctalia msg settings-toggle";
+    }
+
+    Mod+X hotkey-overlay-title="Session Menu" {
+        spawn-sh "noctalia msg panel-toggle session";
+    }
+
+    Mod+Shift+V hotkey-overlay-title="Clipboard" {
+        spawn-sh "noctalia msg panel-toggle clipboard";
+    }
+    Mod+W hotkey-overlay-title="Wallpaper" {
+        spawn-sh "noctalia msg panel-toggle ashur-d/wallpaper-widget:hub";
+    }
+
+    // ------------------------------------------------------------------------
+    // APPLICATIONS
+    // ------------------------------------------------------------------------
+
+    Mod+T hotkey-overlay-title="Telegram" {
+        spawn-sh "Telegram";
+    }
+
+    Mod+Return hotkey-overlay-title="Terminal: Kitty" {
+        spawn "kitty" "--directory" "/home/daito";
+    }
+
+    Mod+B hotkey-overlay-title="Browser" {
+        spawn-sh "brave-origin";
+    }
+
+    Mod+Y hotkey-overlay-title="File Manager" {
+	 spawn "kitty" "-e" "yazi"; 
+    }
+    Mod+C hotkey-overlay-title="Code editor" {
+        spawn "code";
+    }
+    Mod+E hotkey-overlay-title="files" {
+        spawn "nautilus";
+    }
+
+    Mod+M hotkey-overlay-title="limusic" {
+        spawn-sh "limusic-app";
+    }
+
+    // ------------------------------------------------------------------------
+    // NIRI HOTKEY OVERLAY
+    // ------------------------------------------------------------------------
+
+    Mod+Shift+Slash {
+        show-hotkey-overlay;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // LOCK SCREEN
+    // ------------------------------------------------------------------------
+
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" {
+        spawn "swaylock";
+    }
+
+
+    // ------------------------------------------------------------------------
+    // AUDIO
+    // ------------------------------------------------------------------------
+
+    XF86AudioRaiseVolume allow-when-locked=true {
+        spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0";
+    }
+
+    XF86AudioLowerVolume allow-when-locked=true {
+        spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-";
+    }
+
+    XF86AudioMute allow-when-locked=true {
+        spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+    }
+
+    XF86AudioMicMute allow-when-locked=true {
+        spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+    }
+
+
+    // ------------------------------------------------------------------------
+    // MEDIA
+    // ------------------------------------------------------------------------
+
+    XF86AudioPlay allow-when-locked=true {
+        spawn-sh "playerctl play-pause";
+    }
+
+    XF86AudioStop allow-when-locked=true {
+        spawn-sh "playerctl stop";
+    }
+
+    XF86AudioPrev allow-when-locked=true {
+        spawn-sh "playerctl previous";
+    }
+
+    XF86AudioNext allow-when-locked=true {
+        spawn-sh "playerctl next";
+    }
+
+
+    // ------------------------------------------------------------------------
+    // BRIGHTNESS
+    // ------------------------------------------------------------------------
+
+    XF86MonBrightnessUp allow-when-locked=true {
+        spawn "brightnessctl" "--class=backlight" "set" "+10%";
+    }
+
+    XF86MonBrightnessDown allow-when-locked=true {
+        spawn "brightnessctl" "--class=backlight" "set" "10%-";
+    }
+
+
+    // ------------------------------------------------------------------------
+    // WINDOW & COLUMN ACTIONS
+    // ------------------------------------------------------------------------
+
+    Mod+Q repeat=false {
+        close-window;
+    }
+
+    Alt+F4 repeat=false {
+	spawn-sh "noctalia msg panel-toggle session"; 
+    }
+
+    Mod+Space repeat=false {
+        toggle-overview;
+    }
+
+    Mod+F {
+        maximize-column;
+    }
+
+    Mod+Shift+F {
+        fullscreen-window;
+    }
+
+    Mod+Ctrl+F {
+        expand-column-to-available-width;
+    }
+
+    Mod+Ctrl+C {
+        center-column;
+    }
+
+    Mod+V {
+        toggle-window-floating;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // NAVIGATION
+    // ------------------------------------------------------------------------
+
+    Mod+Left {
+        focus-column-left;
+    }
+
+    Mod+Down {
+        focus-window-down;
+    }
+
+    Mod+Up {
+        focus-window-up;
+    }
+
+    Mod+Right {
+        focus-column-right;
+    }
+
+    Mod+H {
+        focus-column-left;
+    }
+
+    Mod+J {
+        focus-window-down;
+    }
+
+    Mod+K {
+        focus-window-up;
+    }
+
+    Mod+L {
+        focus-column-right;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // MOVE WINDOWS / COLUMNS
+    // ------------------------------------------------------------------------
+
+    Mod+Ctrl+Left {
+        move-column-left;
+    }
+
+    Mod+Ctrl+Down {
+        move-window-down;
+    }
+
+    Mod+Ctrl+Up {
+        move-window-up;
+    }
+
+    Mod+Ctrl+Right {
+        move-column-right;
+    }
+
+    Mod+Ctrl+H {
+        move-column-left;
+    }
+
+    Mod+Ctrl+J {
+        move-window-down;
+    }
+
+    Mod+Ctrl+K {
+        move-window-up;
+    }
+
+    Mod+Ctrl+L {
+        move-column-right;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // WORKSPACES
+    // ------------------------------------------------------------------------
+
+    Mod+1 {
+        focus-workspace 1;
+    }
+
+    Mod+2 {
+        focus-workspace 2;
+    }
+
+    Mod+3 {
+        focus-workspace 3;
+    }
+
+    Mod+4 {
+        focus-workspace 4;
+    }
+
+    Mod+5 {
+        focus-workspace 5;
+    }
+
+    Mod+6 {
+        focus-workspace 6;
+    }
+
+    Mod+7 {
+        focus-workspace 7;
+    }
+
+    Mod+8 {
+        focus-workspace 8;
+    }
+
+    Mod+9 {
+        focus-workspace 9;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // MOVE TO WORKSPACE
+    // ------------------------------------------------------------------------
+
+    Mod+Ctrl+1 {
+        move-column-to-workspace 1;
+    }
+
+    Mod+Ctrl+2 {
+        move-column-to-workspace 2;
+    }
+
+    Mod+Ctrl+3 {
+        move-column-to-workspace 3;
+    }
+
+    Mod+Ctrl+4 {
+        move-column-to-workspace 4;
+    }
+
+    Mod+Ctrl+5 {
+        move-column-to-workspace 5;
+    }
+
+    Mod+Ctrl+6 {
+        move-column-to-workspace 6;
+    }
+
+    Mod+Ctrl+7 {
+        move-column-to-workspace 7;
+    }
+
+    Mod+Ctrl+8 {
+        move-column-to-workspace 8;
+    }
+
+    Mod+Ctrl+9 {
+        move-column-to-workspace 9;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // COLUMN SIZES
+    // ------------------------------------------------------------------------
+
+    Mod+R {
+        switch-preset-column-width;
+    }
+
+    Mod+Shift+R {
+        switch-preset-window-height;
+    }
+
+    Mod+Ctrl+R {
+        reset-window-height;
+    }
+
+    Mod+Minus {
+        set-column-width "-10%";
+    }
+
+    Mod+Equal {
+        set-column-width "+10%";
+    }
+
+    Mod+Shift+Minus {
+        set-window-height "-10%";
+    }
+
+    Mod+Shift+Equal {
+        set-window-height "+10%";
+    }
+
+
+    // ------------------------------------------------------------------------
+    // SCREENSHOTS
+    // ------------------------------------------------------------------------
+
+    Print {
+        screenshot;
+    }
+
+    Ctrl+Print {
+        screenshot-screen;
+    }
+
+    Alt+Print {
+        screenshot-window;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // SYSTEM
+    // ------------------------------------------------------------------------
+
+    Mod+Escape allow-inhibiting=false {
+        toggle-keyboard-shortcuts-inhibit;
+    }
+
+    Ctrl+Alt+Delete {
+        spawn-sh "systemctl poweroff";
+    }
+
+    Mod+Shift+E {
+        quit;
+    }
+
+    Mod+Shift+P {
+        power-off-monitors;
+    }
+}
+
+
+// ============================================================================
+// NOCTALIA INCLUDE
+// ============================================================================
+
+
+
+
+
+
+include "noctalia.kdl"
