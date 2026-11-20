@@ -1,0 +1,17 @@
+
+[Default Applications]
+text/html=brave-origin.desktop
+x-scheme-handler/http=brave-origin.desktop
+x-scheme-handler/https=brave-origin.desktop
+x-scheme-handler/about=brave-origin.desktop
+x-scheme-handler/unknown=brave-origin.desktop
+image/jpeg=org.gnome.gThumb.desktop
+image/png=org.gnome.gThumb.desktop
+image/webp=org.gnome.gThumb.desktop
+video/mp4=haruna.desktop
+video/x-matroska=haruna.desktop
+video/webm=haruna.desktop
+application/pdf=org.gnome.Evince.desktop
+text/plain=com.microsoft.VSCode.desktop
+image/gif=org.gnome.gThumb.desktop
+video/x-msvideo=haruna.desktop
