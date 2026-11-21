@@ -3,6 +3,7 @@ high_contrast = false
 ui_scale = 1.0
 
 [audio]
+colorize_icons = false
 enable_notification_sounds = true
 enable_overdrive = false
 enable_power_sounds = true
@@ -11,6 +12,7 @@ enable_sounds = true
 enable_volume_sounds = true
 sound_theme = "freedesktop"
 sound_volume = 0.5
+spectrum_frame_rate = 60
 
 [backdrop]
 blur_intensity = 0.5
@@ -23,7 +25,8 @@ order = [ "default" ]
     [bar.default]
     auto_hide = false
     auto_hide_delay_ms = 0
-    background_opacity = 1.0
+    auto_hide_reserve_space = false
+    background_opacity = 0.0
     border = "outline_variant"
     border_width = 0.0
     capsule = true
@@ -45,19 +48,19 @@ order = [ "default" ]
     hover_highlight = true
     layer = "top"
     margin_edge = 0
-    margin_ends = 4
+    margin_ends = 2
     margin_opposite_edge = 0
     padding = 14
-    panel_overlap = 1
+    panel_overlap = 0
     position = "left"
     radius = 12
     radius_bottom_left = 12
     radius_bottom_right = 12
     radius_top_left = 12
     radius_top_right = 12
-    reserve_space = true
+    reserve_space = false
     scale = 1.0
-    shadow = true
+    shadow = false
     show_on_workspace_switch = true
     show_tooltip = true
     smart_auto_hide = false
@@ -77,8 +80,11 @@ connection_notifications = true
 
 [brightness]
 enable_ddcutil = false
+enable_scheduled_brightness = false
 ignore_mmids = []
 minimum_brightness = 0.0
+scheduled_day_brightness = 1.0
+scheduled_night_brightness = 0.5
 sync_all_monitors = false
 
 [calendar]
@@ -146,13 +152,17 @@ active_monitor_only = false
 active_opacity = 1.0
 active_scale = 1.0
 auto_hide = false
+auto_hide_reveal_delay_ms = 250
 background_opacity = 0.87999999523162842
 border = "outline_variant"
 border_width = 0.0
+colorize_icons = false
 compositor_blur = true
 concave_edge_corners = true
 cross_axis_padding = 8
 enabled = false
+icon_saturation = 1.0
+icon_shadow = false
 icon_size = 48
 inactive_opacity = 0.85000002384185791
 inactive_scale = 0.85000002384185791
@@ -251,12 +261,15 @@ pre_action_fade_seconds = 2.0
 
 [keybinds]
 cancel = [ "Escape" ]
+category_next = [ "Ctrl+Tab" ]
+category_previous = [ "Ctrl+Shift+ISO_Left_Tab" ]
 copy = [ "Ctrl+c" ]
 delete = [ "Delete" ]
 down = [ "Down" ]
 left = [ "Left" ]
 right = [ "Right" ]
 save = [ "Ctrl+s" ]
+select_all = [ "Ctrl+a" ]
 tab_next = [ "Tab" ]
 tab_previous = [ "Shift+ISO_Left_Tab" ]
 up = [ "Up" ]
@@ -273,19 +286,21 @@ sunset = ""
 allow_empty_password = false
 blur_intensity = 0.5
 blurred_desktop = false
+dnd = false
 edge_smoothness = 0.30000001192092896
 enabled = true
 fingerprint = true
 grace_period_seconds = 0
 lock_before_suspend = true
 monitors = []
+tint_color = "surface"
 tint_intensity = 0.30000001192092896
 transition = [ "fade", "wipe", "disc", "stripes", "zoom", "honeycomb", "vortex", "pixel", "diamond", "golden", "melt" ]
 transition_duration = 1500.0
 wallpaper = ""
 
 [lockscreen_widgets]
-enabled = false
+enabled = true
 schema_version = 2
 widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@WL-1", "lockscreen-login-box@winit" ]
 
@@ -297,12 +312,12 @@ widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@WL-1", "loc
     [lockscreen_widgets.widget."lockscreen-login-box@WL-1"]
     box_height = 196.0
     box_width = 720.0
-    cx = 462.0
-    cy = 876.3433837890625
+    cx = 463.99996948242188
+    cy = 437.3433837890625
     enabled = true
     output = "WL-1"
-    placement_height = 1058.0
-    placement_width = 924.0
+    placement_height = 528.0
+    placement_width = 928.0
     rotation = 0.0
     type = "login_box"
 
@@ -318,6 +333,7 @@ widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@WL-1", "loc
         show_keyboard_layout = true
         show_login_button = true
         show_media = true
+        show_media_controls = true
         show_password_reveal = true
         show_session_buttons = true
         show_unlock_hint = true
@@ -326,8 +342,8 @@ widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@WL-1", "loc
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 196.0
     box_width = 810.0
-    cx = 960.0
-    cy = 898.0
+    cx = 933.0
+    cy = 862.0
     enabled = true
     output = "eDP-1"
     placement_height = 1080.0
@@ -347,6 +363,7 @@ widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@WL-1", "loc
         show_keyboard_layout = true
         show_login_button = true
         show_media = true
+        show_media_controls = true
         show_password_reveal = true
         show_session_buttons = true
         show_unlock_hint = true
@@ -376,6 +393,7 @@ widget_order = [ "lockscreen-login-box@eDP-1", "lockscreen-login-box@WL-1", "loc
         show_keyboard_layout = true
         show_login_button = true
         show_media = true
+        show_media_controls = true
         show_password_reveal = true
         show_session_buttons = true
         show_unlock_hint = true
@@ -393,19 +411,23 @@ border = true
 border_color = "outline_variant"
 border_width = 1.0
 collapse_on_dismiss = true
+colorize_icons = false
 enable_daemon = true
 follow_focused_output = false
+group_by_app = true
 history_retention_hours = 0
 keep_dismissed_in_history = true
 layer = "top"
 max_visible = 0
 monitors = []
+newest_on_edge = false
 offset_x = 20
 offset_y = 8
 position = "top_right"
 scale = 1.0
 show_actions = true
 show_app_name = true
+show_progress_bar = true
 width = 360
 
 [osd]
@@ -466,6 +488,7 @@ enabled = [ "ashur-d/wallpaper-widget" ]
 avatar_path = ""
 button_borders = true
 card_borders = true
+circular_avatar = true
 clipboard_auto_paste = "auto"
 clipboard_confirm_clear_history = true
 clipboard_enabled = true
@@ -484,10 +507,12 @@ niri_overview_close_on_launch_enabled = false
 niri_overview_type_to_launch_enabled = false
 offline_mode = false
 password_style = "default"
-polkit_agent = false
+polkit_agent = true
+polkit_colorize_icons = false
 popup_borders = true
 popup_shadows = true
 readline_shortcuts = false
+screen_time_colorize_icons = false
 screen_time_enabled = false
 settings_expand_all_groups = false
 settings_show_advanced = true
@@ -516,8 +541,9 @@ umbriel_overview_type_to_launch_enabled = false
     auto_paste = "auto"
     categories = true
     category_icons_only = true
+    colorize_icons = false
     compact = false
-    default_view = "recent"
+    default_view = "all"
     fetch_exchange_rates = true
     ignore_mouse = false
     layout = "simple"
@@ -538,6 +564,10 @@ umbriel_overview_type_to_launch_enabled = false
 
         [shell.launcher.panels]
         ignored = [ "polkit", "setup-wizard", "test", "launcher" ]
+
+        [shell.launcher.providers.emoji]
+        global = true
+        prefix = ""
 
     [shell.mpris]
     blacklist = []
@@ -581,6 +611,7 @@ umbriel_overview_type_to_launch_enabled = false
 
     [shell.screenshot]
     annotate = false
+    append_mode_suffix = true
     close_on_copy = true
     close_on_save = true
     confirm_region = false
@@ -596,7 +627,7 @@ umbriel_overview_type_to_launch_enabled = false
     region_border_width = 2.0
     region_dim_opacity = 0.64999997615814209
     region_modifier = "none"
-    remember_last_region = false
+    remember_last_region = true
     save_to_file = true
     show_cursor = false
     show_region_dimensions = true
@@ -670,6 +701,7 @@ umbriel_overview_type_to_launch_enabled = false
     direction = "down"
 
     [shell.window_switcher]
+    colorize_icons = false
     current_workspace_only = false
     mru = false
     show_all_outputs = true
@@ -728,7 +760,8 @@ pure_black_dark = true
 shell_mode = "follow"
 source = "wallpaper"
 sync_color_scheme = true
-wallpaper_scheme = "vibrant"
+terminal_colors = "palette"
+wallpaper_scheme = "m3-fruit-salad"
 
     [theme.templates]
     builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "kitty", "mango", "niri", "qt" ]
@@ -745,6 +778,7 @@ enabled = true
 fill_color = ""
 fill_mode = "crop"
 per_monitor_directories = false
+sync_transitions = true
 transition = [ "fade", "wipe", "disc", "stripes", "zoom", "honeycomb", "vortex", "pixel", "diamond", "golden", "melt" ]
 transition_duration = 1500.0
 transition_on_startup = false
