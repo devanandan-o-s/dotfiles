@@ -1,4 +1,5 @@
 [accessibility]
+font_scale = 1.0
 high_contrast = false
 ui_scale = 1.0
 
@@ -42,7 +43,7 @@ order = [ "default" ]
     concave_edge_corners = true
     contact_shadow = false
     enabled = true
-    end = [ "media", "tray", "network", "bluetooth", "battery", "session" ]
+    end = [ "network", "bluetooth", "battery", "session" ]
     font_scale = 1.0
     font_weight = 500
     hover_highlight = true
@@ -52,7 +53,7 @@ order = [ "default" ]
     margin_opposite_edge = 0
     padding = 14
     panel_overlap = 0
-    position = "left"
+    position = "top"
     radius = 12
     radius_bottom_left = 12
     radius_bottom_right = 12
@@ -468,6 +469,9 @@ scale = 1.0
 [plugin_settings."ashur-d/wallpaper-widget"]
 close_on_apply = true
 
+[plugin_settings."vn1k/cursor"]
+mango_config = "/home/daito/.config/mango/config.conf"
+
 [plugins]
 auto_update = "all"
 enabled = [ "ashur-d/wallpaper-widget" ]
@@ -554,7 +558,7 @@ umbriel_overview_type_to_launch_enabled = false
     show_app_origin_indicator = true
     show_icons = true
     show_navigation_labels = true
-    show_session_button = true
+    show_session_button = false
     show_settings_button = true
     sort_by_usage = true
     track_usage = true
