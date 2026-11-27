@@ -43,7 +43,7 @@ order = [ "default" ]
     concave_edge_corners = true
     contact_shadow = false
     enabled = true
-    end = [ "network", "bluetooth", "battery", "session" ]
+    end = [ "tray", "network", "bluetooth", "battery" ]
     font_scale = 1.0
     font_weight = 500
     hover_highlight = true
@@ -65,7 +65,7 @@ order = [ "default" ]
     show_on_workspace_switch = true
     show_tooltip = true
     smart_auto_hide = false
-    start = [ "control-center", "workspaces" ]
+    start = [ "workspaces" ]
     thickness = 34
     widget_spacing = 6
 
@@ -407,21 +407,21 @@ temperature_day = 6500
 temperature_night = 4000
 
 [notification]
-background_opacity = 0.75
+background_opacity = 0.99999997764825821
 border = true
-border_color = "outline_variant"
-border_width = 1.0
+border_color = "on_surface_variant"
+border_width = 2.5
 collapse_on_dismiss = true
 colorize_icons = false
 enable_daemon = true
-follow_focused_output = false
+follow_focused_output = true
 group_by_app = true
-history_retention_hours = 0
+history_retention_hours = 1
 keep_dismissed_in_history = true
 layer = "top"
 max_visible = 0
 monitors = []
-newest_on_edge = false
+newest_on_edge = true
 offset_x = 20
 offset_y = 8
 position = "top_right"
@@ -768,8 +768,20 @@ terminal_colors = "palette"
 wallpaper_scheme = "m3-fruit-salad"
 
     [theme.templates]
-    builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "kitty", "mango", "niri", "qt" ]
-    community_ids = [ "brave", "brave-origin", "telegram", "vscode", "zed", "fastfetch", "whitesur-icons", "bat", "fzf", "yazi" ]
+    builtin_ids = [ "btop", "gtk3", "gtk4", "kcolorscheme", "kitty", "luciole", "mango", "niri", "qt" ]
+    community_ids = [
+        "brave",
+        "brave-origin",
+        "telegram",
+        "neovim",
+        "vscode",
+        "zed",
+        "fastfetch",
+        "whitesur-icons",
+        "bat",
+        "fzf",
+        "yazi"
+    ]
     enable_builtin_templates = true
     enable_community_templates = true
 
@@ -793,6 +805,15 @@ transition_on_startup = false
     order = "random"
     pause_on_fullscreen = false
     recursive = false
+
+    [wallpaper.default]
+    path = "/home/daito/Pictures/Wallpaper/wallhaven-pog55m_1920x1080.png"
+
+    [wallpaper.last]
+    path = "/home/daito/Pictures/Wallpaper/wallhaven-pog55m_1920x1080.png"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/daito/Pictures/Wallpaper/wallhaven-pog55m_1920x1080.png"
 
 [weather]
 effects = true
