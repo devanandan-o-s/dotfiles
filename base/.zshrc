@@ -34,3 +34,4 @@ export PATH="$HOME/.local/bin:$PATH"
 eval "$(zoxide init --cmd cd zsh)"
 
 export PATH="$HOME/.npm-global/bin:$PATH"
+alias upd="sudo dnf upgrade --refresh -y"

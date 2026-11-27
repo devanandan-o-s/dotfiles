@@ -3,8 +3,8 @@
   "logo": {
     "source": "~/.config/fastfetch/fedora.txt",
     "color": {
-      "1": "#62dbb6",
-      "2": "#63d6ba"
+      "1": "#fa63f9",
+      "2": "#ed63eb"
     },
     "padding": {
       "top": 1,
@@ -15,8 +15,8 @@
   "display": {
     "separator": " ",
     "color": {
-      "keys": "#62dbb6",
-      "title": "#88d6ba"
+      "keys": "#faacf9",
+      "title": "#edb4eb"
     },
     "percent": {
       "type": 5,
@@ -24,8 +24,8 @@
       "colorYellow": "bright_white",
       "colorRed": "white",
       "color": {
-        "green": "#87d1eb",
-        "yellow": "#62dbb6",
+        "green": "#ffb3b0",
+        "yellow": "#faacf9",
         "red": "#ffb4ab"
       }
     }
