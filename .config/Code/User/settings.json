@@ -1,0 +1,8 @@
+{
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "workbench.startupEditor": "none",
+    "workbench.colorTheme": "NoctaliaTheme",
+    "editor.fontFamily": "'Droid Sans Mono',",
+    "security.workspace.trust.untrustedFiles": "newWindow",
+    "terminal.integrated.fontSize": 16
+}
