@@ -1,10 +1,6 @@
-#Dotfiles
+Dotfiles
 
-##Prerequistes 
-
-install git and stow and clone the repo 
-
-cd ~/dotfiles
+Prerequistes - git and gnu stow
 
 stow -v -t ~ base
 
